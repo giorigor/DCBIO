@@ -1,9 +1,7 @@
-var map;
 function initMap() {
 
     /// Cria um estilo de mapa que fique marromzinho
-    var styledMapType = new google.maps.StyledMapType(
-    [
+    var styledMapType = new google.maps.StyledMapType([
         {
             "elementType": "geometry",
             "stylers": [
@@ -241,14 +239,44 @@ function initMap() {
                 }
             ]
         }
-    ],
-        {name: 'Styled Map'});
+    ], {name: 'Styled Map'});
 
     /// Cria o mapa direitinho
     var map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: -19.923203, lng: -43.992865},
         zoom: 17,
+        gestureHandling: 'none'
+    });
 
+
+    var coordPredios = function populateMarkers() {
+        return [
+            {lat: -19.924619, lng: -43.9932171},
+            {lat: -19.920809, lng: -43.993201},
+            {lat: -19.9220128, lng: -43.9897775}
+        ];
+    };
+
+    // for (var predio in coordPredios){
+    //
+    //     var marker = new google.maps.Marker({
+    //         position: predio,
+    //         map: map
+    //     });
+    //     console.log(predio);
+    // }
+
+    var marker1 = new google.maps.Marker({
+        position: {lat: -19.924619, lng: -43.9932171},
+        map: map
+    });
+    var marker2 = new google.maps.Marker({
+        position: {lat: -19.920809, lng: -43.993201},
+        map: map
+    });
+    var marker3 = new google.maps.Marker({
+        position: {lat: -19.9220128, lng: -43.9897775},
+        map: map
     });
 
     // Converte o mapa criado pro tipo estilizado marromzinho
