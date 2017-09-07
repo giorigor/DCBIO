@@ -248,36 +248,86 @@ function initMap() {
         gestureHandling: 'none'
     });
 
-
+    // Popula uma variável "coordPredios" com as informaçoes dos predios
     var coordPredios = function populateMarkers() {
         return [
-            {lat: -19.924619, lng: -43.9932171},
-            {lat: -19.920809, lng: -43.993201},
-            {lat: -19.9220128, lng: -43.9897775}
+            {titulo: 'Predio 15', num: '15', coord: {lat: -19.924619, lng: -43.9932171}},
+            {titulo: 'Biblioteca', num: 'B', coord: {lat: -19.920809, lng: -43.993201}},
+            {titulo: 'Museu', num: 'M', coord: {lat: -19.9220128, lng: -43.9897775}}
         ];
     };
 
-    // for (var predio in coordPredios){
-    //
-    //     var marker = new google.maps.Marker({
-    //         position: predio,
-    //         map: map
-    //     });
-    //     console.log(predio);
-    // }
+    // Seta o icone dos markers
+    var icon = './images/pin.png';
 
-    var marker1 = new google.maps.Marker({
-        position: {lat: -19.924619, lng: -43.9932171},
-        map: map
+    // Cria a infoWindow
+    var infoWindow = new google.maps.InfoWindow({});
+    infoWindow.addListener('closeclick', function(){
+        infoWindow.close();
+        map.panTo({lat: -19.923203, lng: -43.992865});
     });
-    var marker2 = new google.maps.Marker({
-        position: {lat: -19.920809, lng: -43.993201},
-        map: map
+
+    // Centraliza o mapa quando clica fora da infoWindow
+    google.maps.event.addListener(map, 'click', function(){
+        infoWindow.close();
+        map.panTo({lat: -19.923203, lng: -43.992865});
     });
-    var marker3 = new google.maps.Marker({
-        position: {lat: -19.9220128, lng: -43.9897775},
-        map: map
-    });
+
+    // 'For' importante que gerencia tudo dos Markers no mapa
+    for( var predio in coordPredios()) {
+        populateMarkers(predio);
+    }
+
+    function populateMarkers(predio){
+
+        var contentString =
+            '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h3 id="firstHeading" >' + coordPredios()[predio].titulo + '</h3>'+
+            '<div id="bodyContent">'+
+            '<p class="text-warning">Último consumo energético: 340 KWH</p>'+
+            '<p class="text-primary">Último consumo hídrico: 200 KL</p>'+
+            '<button type="button" class="btn btn-light">Mais Informações</button>' +
+        '</div>'+
+        '</div>';
+
+        var marker = new google.maps.Marker({
+            position: coordPredios()[predio].coord,
+            map: map,
+            // icon: icon,
+            label: coordPredios()[predio].num,
+            contentString: contentString
+        });
+
+        marker.addListener('click', function() {
+            infoWindow.close();
+            infoWindow.setContent(contentString)
+            infoWindow.open(map, marker);
+        });
+
+
+
+        console.log(infoWindow);
+    }
+
+    // var marker1 = new google.maps.Marker({
+    //     position: {lat: -19.924619, lng: -43.9932171},
+    //     map: map,
+    //     // icon: icon
+    // });
+    // var marker2 = new google.maps.Marker({
+    //     position: {lat: -19.920809, lng: -43.993201},
+    //     map: map,
+    //     // icon: icon
+    // });
+    // var marker3 = new google.maps.Marker({
+    //     position: {lat: -19.9220128, lng: -43.9897775},
+    //     map: map,
+    //     // icon: icon
+    // });
+
+
 
     // Converte o mapa criado pro tipo estilizado marromzinho
     map.mapTypes.set('styled_map', styledMapType);
