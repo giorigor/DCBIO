@@ -254,4 +254,78 @@ function initMap() {
     // Converte o mapa criado pro tipo estilizado marromzinho
     map.mapTypes.set('styled_map', styledMapType);
     map.setMapTypeId('styled_map');
+
+
+   // Aparece modal com as informações ao clicar no marcador
+    var marker = new google.maps.Marker({
+        position: {lat: -19.923203, lng: -43.992865},
+        map: map,
+        title: 'Uluru (Ayers Rock)'
+    });
+    marker.addListener('click', function() {
+       // infowindow.open(map, marker);
+        var title = "Prédio 34";
+        var content = "Aqui ficarão as informações do prédio 34";
+
+
+        // Modal Content
+        $("#marker_title").text(title);
+        $("#marker_content").text(content);
+
+        $('#myModal').modal('show');
+
+        // grafico para recursos hidricos
+        var ctx = document.getElementById('canvas').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
+                datasets: [{
+                    label: "Recursos Hidricos",
+                    backgroundColor: 'transparent',
+                    borderColor: '#317abe',
+                    data: [200, 240, 300, 100, 200, 100, 98],
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+
+        // grafico para recursos energeticos
+        var ctx = document.getElementById('canvas2').getContext('2d');
+        chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
+                datasets: [{
+                    label: "Recursos Energéticos",
+                    backgroundColor: 'transparent',
+                    borderColor: '#bd2130',
+                    data: [200, 240, 300, 100, 200, 100, 98],
+                }]
+            },
+
+
+        });
+
+
+
+
+
+     });
+
 }
+
+
+
+
+
+
+
