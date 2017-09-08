@@ -1,5 +1,19 @@
-var map;
+
+// Declara o mapa e infowindow pra ser acessado por everybody (global)
+map;
+icon = 'Z';
+coordCampus = {lat: -19.923203, lng: -43.992865};
+zoomCampus = 17;
+
+
 function initMap() {
+
+    /// Cria o mapa direitinho
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: coordCampus,
+        zoom: zoomCampus,
+        gestureHandling: 'none'
+    });
 
     /// Cria um estilo de mapa que fique marromzinho
     var styledMapType = new google.maps.StyledMapType(
@@ -244,12 +258,48 @@ function initMap() {
     ],
         {name: 'Styled Map'});
 
-    /// Cria o mapa direitinho
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -19.923203, lng: -43.992865},
-        zoom: 17,
+    // Popula uma variável "coordPredios" com as informaçoes dos predios
+    var predios = getBuildingData();
 
+    // Cria a infoWindow propriamente dita
+    var infoWindow = new google.maps.InfoWindow({});
+
+    // Se fechar a infoWindow, retornar à origem
+    infoWindow.addListener('closeclick', function(){
+        infoWindow.close();
+        map.panTo(coordCampus);
+        map.setZoom(zoomCampus);
     });
+
+    // Centraliza o mapa quando clica fora da infoWindow
+    google.maps.event.addListener(map, 'click', function(){
+        infoWindow.close();
+        map.panTo(coordCampus);
+        map.setZoom(zoomCampus);
+    });
+
+    // 'For' importante que gerencia tudo dos Markers no mapa
+    for( var predio in predios) {
+        populateMarkers(predio, infoWindow);
+    }
+
+    // var marker1 = new google.maps.Marker({
+    //     position: {lat: -19.924619, lng: -43.9932171},
+    //     map: map,
+    //     // icon: icon
+    // });
+    // var marker2 = new google.maps.Marker({
+    //     position: {lat: -19.920809, lng: -43.993201},
+    //     map: map,
+    //     // icon: icon
+    // });
+    // var marker3 = new google.maps.Marker({
+    //     position: {lat: -19.9220128, lng: -43.9897775},
+    //     map: map,
+    //     // icon: icon
+    // });
+
+
 
     // Converte o mapa criado pro tipo estilizado marromzinho
     map.mapTypes.set('styled_map', styledMapType);
@@ -257,12 +307,12 @@ function initMap() {
 
 
    // Aparece modal com as informações ao clicar no marcador
-    var marker = new google.maps.Marker({
+    var markerteste = new google.maps.Marker({
         position: {lat: -19.923203, lng: -43.992865},
         map: map,
         title: 'Uluru (Ayers Rock)'
     });
-    marker.addListener('click', function() {
+    markerteste.addListener('click', function() {
        // infowindow.open(map, marker);
         var title = "Prédio 34";
         var content = "Aqui ficarão as informações do prédio 34";
@@ -296,7 +346,7 @@ function initMap() {
         });
 
         // grafico para recursos energeticos
-        var ctx = document.getElementById('canvas2').getContext('2d');
+        ctx = document.getElementById('canvas2').getContext('2d');
         chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'line',
@@ -323,9 +373,84 @@ function initMap() {
 
 }
 
+function populateMarkers(predio, infoWindow){
 
+    var contentString =
+        '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h3 id="firstHeading" >' + getBuildingData()[predio].titulo + '</h3>'+
+        '<div id="bodyContent">'+
+        '<p class="text-warning">Último consumo energético: ' + getBuildingData()[predio].elec + ' KWH</p>'+
+        '<p class="text-primary">Último consumo hídrico: ' + getBuildingData()[predio].hidro + ' KL</p>'+
+        '<button type="button" class="btn btn-light">Mais Informações</button>' +
+        '</div>'+
+        '</div>';
 
+    var iconElec = getCircle(getBuildingData()[predio].elec, 'orange');
+    var iconHidro = getCircle(getBuildingData()[predio].hidro, 'blue');
 
+    var marker;
+    if (icon=='H'){
+        marker = new google.maps.Marker({
+            position: getBuildingData()[predio].coord,
+            map: map,
+            icon: iconHidro,
+            label: getBuildingData()[predio].num,
+            contentString: contentString
+        });
+        console.log("Entrou em H");
+    }
+    else if (icon=='E')
+    {
+        marker = new google.maps.Marker({
+            position: getBuildingData()[predio].coord,
+            map: map,
+            icon: iconElec,
+            label: getBuildingData()[predio].num,
+            contentString: contentString
+        });
+        console.log("Entrou em E");
+    }
+    else{
+        marker = new google.maps.Marker({
+            position: getBuildingData()[predio].coord,
+            map: map,
+            label: getBuildingData()[predio].num,
+            contentString: contentString
+        });
+        console.log("Entrou em Z");
+    }
 
+    marker.addListener('click', function() {
+        infoWindow.close();
+        infoWindow.setContent(contentString);
+        infoWindow.open(map, marker);
+    });
 
+    console.log(infoWindow);
+}
 
+function getBuildingData() {
+    return [
+        {titulo: 'Predio 15', num: '15', hidro: 250, elec: 300, coord: {lat: -19.924619, lng: -43.9932171}},
+        {titulo: 'Biblioteca', num: 'B', hidro: 450, elec: 250, coord: {lat: -19.920809, lng: -43.993201}},
+        {titulo: 'Museu', num: 'M', hidro: 500, elec: 350, coord: {lat: -19.9220128, lng: -43.9897775}}
+    ];
+};
+
+function toggleMarkerTypes(ch){
+    icon = ch;
+    initMap();
+}
+
+function getCircle(magnitude, color) {
+    return {
+        path: google.maps.SymbolPath.CIRCLE,
+        fillColor: color,
+        fillOpacity: .3,
+        scale: magnitude/15,
+        strokeColor: 'white',
+        strokeWeight: .7
+    };
+}
