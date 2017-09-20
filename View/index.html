@@ -73,9 +73,17 @@
         p.titulo-descricao {
             font-size: 16px;
             text-align: center;
-            margin: -15px 0 0 0;
+            margin: -15px 0 26px 0;
             color: rgba(51, 51, 51, 0.94);
             font-weight: 100;
+        }
+
+        p#marker_hidro {
+            margin: 0 0 0 0 !important;
+        }
+
+        p#marker_elec {
+            margin: 0 0 0 0 !important;
         }
 
         /* customização do canvas */
@@ -150,10 +158,12 @@
                                 <div class="row">
                                     <h1 class="titulo-principal">Utilização de recursos naturais</h1>
                                     <div class="col-md-4">
-                                        <div class="recurso recurso-hidrico">200<br> <p class="titulo-descricao"><strong>litros</strong> de recursos hídricos</p></div>
+                                        <p class="recurso recurso-hidrico" id="marker_hidro"></p>
+                                         <p class="titulo-descricao"><strong>litros</strong> de recursos hídricos</p>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="recurso recurso-energetico">200 <br> <p class="titulo-descricao"><strong>kWh</strong> de recursos energéticos</p></div>
+                                        <p class="recurso recurso-energetico" id="marker_elec"></p>
+                                        <p class="titulo-descricao"><strong>kWh</strong> de recursos energéticos</p>
                                     </div>
                                     <h1 class="titulo-principal">Acompanhamento de gastos</h1>
                                     <canvas id="canvas" width="400px" height="200px"></canvas>
