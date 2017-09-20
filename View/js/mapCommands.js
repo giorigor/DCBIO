@@ -368,6 +368,9 @@ function populateMarkers(pos, infoWindow){
         $("#marker_title").text(predio.titulo);
         $("#marker_hidro").text(predio.hidro);
         $("#marker_elec").text(predio.elec);
+        $("FormControlSelectCampus").val(2);
+        $("FormControlSelectPredio").val(predio.titulo);
+
 
     });
 
@@ -377,13 +380,13 @@ function populateMarkers(pos, infoWindow){
 
 function getBuildingData() {
     return [
-        {titulo: 'Predio 15', num: '15', hidro: 250, elec: 300, coord: {lat: -19.924619, lng: -43.9932171}},
+        {titulo: 'Prédio 15', num: '15', hidro: 250, elec: 300, coord: {lat: -19.924619, lng: -43.9932171}},
         {titulo: 'Biblioteca', num: 'B', hidro: 450, elec: 250, coord: {lat: -19.920809, lng: -43.993201}},
         {titulo: 'Museu', num: 'M', hidro: 500, elec: 350, coord: {lat: -19.9220128, lng: -43.9897775}}
     ];
 };
 
-function toggleMarkerTypes(ch){
+function toggleMarkerTypes(ch){s
     icon = ch;
     initMap();
 }
@@ -399,7 +402,11 @@ function getCircle(magnitude, color) {
     };
 }
 
+function invocaModalReportarProblema() {
 
+        $('#myModal').modal('hide');
+        $('#ModalReportarProblema').modal('show');
+}
 
 function invocaModal () {
 
