@@ -1,17 +1,46 @@
+// Initialize Firebase
+const config = {
+    apiKey: "AIzaSyCWRZhM2RJQP03-fHs5kX1fcCWnOYwGpA0",
+    authDomain: "dcbio-tis-4-1504461364829.firebaseapp.com",
+    databaseURL: "https://dcbio-tis-4-1504461364829.firebaseio.com",
+    projectId: "dcbio-tis-4-1504461364829",
+    storageBucket: "dcbio-tis-4-1504461364829.appspot.com",
+    messagingSenderId: "531061400550"
+};
+firebase.initializeApp(config);
+const rootRef = firebase.database().ref();
 
-// Declara o mapa e infowindow pra ser acessado por everybody (global)
+
+
+
 map;
 icon = 'Z';
-coordCampus = {lat: -19.923203, lng: -43.992865};
-zoomCampus = 17;
+campiSelecionado = {};
+listaCampi = '';
 
+
+
+function acessarDatabase() {
+    const campiRef = rootRef.child('campi');
+    campiRef.off();
+
+    listaCampi = campiRef.once('value').then(function (snapshot) {
+        campiSelecionado = snapshot.val()[1];
+        initMap();
+        return snapshot.val();
+    });
+
+    console.log(listaCampi)
+
+// Declara o mapa e infowindow pra ser acessado por everybody (global)
+}
 
 function initMap() {
 
     /// Cria o mapa direitinho
     map = new google.maps.Map(document.getElementById('map'), {
-        center: coordCampus,
-        zoom: zoomCampus,
+        center: campiSelecionado.coord,
+        zoom: campiSelecionado.zoom,
         gestureHandling: 'none'
     });
 
@@ -366,8 +395,8 @@ function populateMarkers(pos, infoWindow){
         infoWindow.setContent(contentString);
         infoWindow.open(map, marker);
         $("#marker_title").text(predio.titulo);
-        $("#marker_hidro").text(predio.hidro);
-        $("#marker_elec").text(predio.elec);
+        $("#marker_hidro").text(500);
+        $("#marker_elec").text(500);
         $("FormControlSelectCampus").val(2);
         $("FormControlSelectPredio").val(predio.titulo);
 
@@ -379,14 +408,23 @@ function populateMarkers(pos, infoWindow){
 }
 
 function getBuildingData() {
-    return [
-        {titulo: 'Prédio 15', num: '15', hidro: 250, elec: 300, coord: {lat: -19.924619, lng: -43.9932171}},
-        {titulo: 'Biblioteca', num: 'B', hidro: 450, elec: 250, coord: {lat: -19.920809, lng: -43.993201}},
-        {titulo: 'Museu', num: 'M', hidro: 500, elec: 350, coord: {lat: -19.9220128, lng: -43.9897775}}
-    ];
+    const prediosRef = rootRef.child('predios').orderByChild('campus').equalTo(campiSelecionado.ident);
+    prediosRef.off();
+
+    var vetPredios =  prediosRef.once('value').then(function(snapshot) {
+        return snapshot.val()
+    });
+
+    return vetPredios;
+
+    // return [
+    //     {titulo: 'Prédio 15', num: '15', hidro: 250, elec: 300, coord: {lat: -19.924619, lng: -43.9932171}},
+    //     {titulo: 'Biblioteca', num: 'B', hidro: 450, elec: 250, coord: {lat: -19.920809, lng: -43.993201}},
+    //     {titulo: 'Museu', num: 'M', hidro: 500, elec: 350, coord: {lat: -19.9220128, lng: -43.9897775}}
+    // ];
 };
 
-function toggleMarkerTypes(ch){s
+function toggleMarkerTypes(ch){
     icon = ch;
     initMap();
 }

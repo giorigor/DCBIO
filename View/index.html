@@ -4,6 +4,9 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
@@ -126,14 +129,23 @@
     <div class="container-fluid" style="height:100%">
         <div class="row" style="height:100%">
 
-            <div class="col-lg-2" style="background-color:floralwhite;">
+            <div class="col-lg-2" style="background-color:rgba(237,255,0,0.10);">
                 <p>Lorem ipsum...</p>
-                <h3>Filtros</h3>
-                <div class="btn-group-vertical" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-secondary" onclick="toggleMarkerTypes('Z')">Nenhum</button>
-                    <button type="button" class="btn btn-secondary" onclick="toggleMarkerTypes('H')">Gasto Hídrico</button>
-                    <button type="button" class="btn btn-secondary" onclick="toggleMarkerTypes('E')">Gasto Energético</button>
-                </div>
+
+                <label for="insiraCampusAqui">Campus</label><br>
+                <select onchange="initMap(value)" id="insiraCampusAqui" class="custom-select form-control">
+                </select>
+
+                <label for="toLogin">Já é contribuinte?</label><br>
+                <a id="toLogin" href="../Controller/login.html" class="btn btn-primary">Entre Aqui</a>
+
+                <!--<div class="dropdown">-->
+                    <!--<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                        <!--Escolha o Campus-->
+                    <!--</button>-->
+                    <!--<div id="insiraCampusAqui" class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
 
             <div id="map" class="col-lg-10" style="background-color:antiquewhite; height: 100%;">
@@ -143,11 +155,11 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal fade" id="modalSobrePredio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog modal-lg table-overflow" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 id="marker_title"></h2>
+                    <h2 id="tituloSobrePredio"></h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
                 </div>
@@ -172,13 +184,13 @@
                             </div>
                             <div class="col-md-4">
                                 <h1 class="titulo-principal">Últimas notícias</h1>
-                                    <ul class="list-group">
+                                    <ul id="reclamacoesSobrePredio" class="list-group">
                                     <li class="list-group-item">Houve uma manutenção no bebedouro do 3º andar no dia 07/09/2017 e já está funcionando. <br> <p class="info-noticia">Publicado em 07/09/2017 às 01:24</p></li>
                                     <li class="list-group-item">O elevador entrará em manutenção na primeira semana de outubro para melhorias. <br> <p class="info-noticia">Publicado em 07/09/2017 às 01:24</p></li>
                                     <li class="list-group-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br> <p class="info-noticia">Publicado em 07/09/2017 às 01:24</p></li>
                                 </ul>
 
-                                <button type="button" class="btn btn-primary btn-reportar" onClick="invocaModalReportarProblema()">REPORTAR PROBLEMA</button>
+                                <button id="buttonReportar" type="button" class="btn btn-primary btn-reportar" onClick="invocaModalReportarProblema()">Reportar Problema</button>
 
                             </div>
                          </div>
@@ -264,10 +276,10 @@
 
 
     <!-- Mapa JavaScript! Não mudar o SRC pq é a chave do mapa pro projeto! -->
-    <script src="js/mapCommands.js"></script>
+    <script src="js/newCommands.js"></script>
 
     <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMtRjvGBFrOM_pXL-ixwKZBYNK8XGqZWM&callback=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMtRjvGBFrOM_pXL-ixwKZBYNK8XGqZWM&callback=initMapZero">
     </script>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
