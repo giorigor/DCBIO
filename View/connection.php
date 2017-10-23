@@ -25,8 +25,7 @@
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(1, $string);
         $stmt = $conn->query($sql);
-        $result = $stmt->fetchAll(PDO::FETCH_NUM);
-        return json_encode($result);
+        return $stmt->fetchAll(PDO::FETCH_NUM);
     }
 
     function getAllCampus()

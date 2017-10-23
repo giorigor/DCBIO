@@ -149,9 +149,9 @@ function invocaModalSobrePredio(idCampus, idPredio) {
 
             // Edita o botão de reportar, passando o predio atual como parâmetro
             let botaoReportar = document.getElementById('buttonReportar');
-            botaoReportar.setAttribute('onClick','invocaModalReportarProblema(' +
-                    idCampus + ',' + idPredio
-                + ')');
+            botaoReportar.setAttribute('onClick','invocaModalReportarProblema(\'' +
+                    idCampus + '\',\'' + idPredio
+                + '\')');
 
 
             // Grafico para recursos hidricos
@@ -202,4 +202,10 @@ function invocaModalSobrePredio(idCampus, idPredio) {
         }
     );
 
+}
+
+function invocaModalReportarProblema(idCampus, idPredio) {
+    // Após tudo emstar pronto, faz o modal esconder
+    $('#modalSobrePredio').modal('hide');
+    $('#ModalReportarProblema').modal('show');
 }

@@ -16,10 +16,10 @@
         header("Content-type: text/html; charset=latin1");
 
         require_once "connection.php";
-        $campi = getAllCampus();
+        $campi = phpQuery('SELECT * FROM tbl_campi ORDER BY nome');
         if(!empty($campi))
         {
-//            var_dump($campi);
+            var_dump($campi);
             echo 'Oi! Esses sao os dados que eu encontrei na tabela Campus: <br>';
             foreach($campi as $campus){
                 echo $campus[1] . ' esta nas coordenadas ' . $campus[2] . ',' . $campus[3];
