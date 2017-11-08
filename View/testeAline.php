@@ -16,7 +16,7 @@
         header("Content-type: text/html; charset=latin1");
 
         require_once "connection.php";
-        $campi = phpQuery('SELECT * FROM tbl_campi ORDER BY nome');
+        $campi = getAllCampus();
         if(!empty($campi))
         {
             var_dump($campi);

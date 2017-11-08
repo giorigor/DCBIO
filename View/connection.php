@@ -10,8 +10,11 @@
         $pwd = "f91c78c0";
         $db = "dcbiodb";
         try{
-            $conn = new PDO( "mysql:host=$host;dbname=$db", $user, $pwd);
-            $conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+            $conn = new PDO(
+                "mysql:host=$host;dbname=$db", $user, $pwd);
+            $conn->setAttribute(
+                PDO::ATTR_ERRMODE,
+                PDO::ERRMODE_EXCEPTION );
         }
         catch(Exception $e){
             die(print_r($e));

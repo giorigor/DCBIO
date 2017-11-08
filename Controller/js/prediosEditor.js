@@ -10,7 +10,6 @@ firebase.initializeApp(config);
 
 const db = firebase.firestore();
 
-
     console.log('oi');
 
     let tableBody = document.getElementById('bodyTable');
