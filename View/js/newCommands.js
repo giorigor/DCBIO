@@ -113,6 +113,8 @@
 
     function invocaModalSobrePredio(idCampus, idPredio) {
 
+        $('#modalSobrePredio').modal('show');
+
         // Encontra novamente no banco os dados daquele prédio
         db.collection('campi').doc(idCampus).collection('predios').doc(idPredio).get().then(
             function (docPredio) {
@@ -151,9 +153,9 @@
                     }
                 );
 
-                btnReportaProblema = document.getElementById('buttonReportar');
-                btnReportaProblema.removeEventListener('click', invocaModalReportarProblema(idCampus, idPredio) );
-                btnReportaProblema.addEventListener('click', invocaModalReportarProblema(idCampus, idPredio))
+                // btnReportaProblema = document.getElementById('buttonReportar');
+                // btnReportaProblema.removeEventListener('click', invocaModalReportarProblema(idCampus, idPredio) );
+                // btnReportaProblema.addEventListener('click', invocaModalReportarProblema(idCampus, idPredio))
 
                 // Edita o botão de reportar, passando o predio atual como parâmetro
                 let botaoReportar = document.getElementById('buttonReportar');
@@ -198,13 +200,13 @@
                             borderColor: '#bd2130',
                             data: [200, 240, 300, 100, 200, 100, 98],
                         }]
-                    },
+                    }
 
 
                 });
 
                 // Após tudo estar pronto, faz o modal aparecer
-                $('#modalSobrePredio').modal('show');
+               // $('#modalSobrePredio').modal('show');
 
 
             }
@@ -213,6 +215,7 @@
     }
 
     function invocaModalReportarProblema(idCampus, idPredio) {
+        $('#ModalReportarProblema').modal('show');
 
         db.collection('campi').get().orderBy('nome').then(
             snap => {
@@ -245,6 +248,6 @@
 
 
         // Após tudo emstar pronto, faz o modal 'Sobre' esconder e o 'Reportar' aparecer
-        $('#modalSobrePredio').modal('hide');
-        $('#ModalReportarProblema').modal('show');
+        // $('#modalSobrePredio').modal('hide');
+        // $('#ModalReportarProblema').modal('show');
     }

@@ -442,54 +442,54 @@ function getCircle(magnitude, color) {
 
 function invocaModalReportarProblema() {
 
-        $('#myModal').modal('hide');
-        $('#ModalReportarProblema').modal('show');
+    $('#myModal').modal('hide');
+    $('#ModalReportarProblema').modal('show');
 }
 
 function invocaModal () {
 
-        $('#myModal').modal('show');
+    $('#myModal').modal('show');
 
-        // grafico para recursos hidricos
-        var ctx = document.getElementById('canvas').getContext('2d');
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'line',
+    // grafico para recursos hidricos
+    var ctx = document.getElementById('canvas').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
 
-            // The data for our dataset
-            data: {
-                labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
-                datasets: [{
-                    label: "Recursos Hidricos",
-                    backgroundColor: 'transparent',
-                    borderColor: '#317abe',
-                    data: [200, 240, 300, 100, 200, 100, 98],
-                }]
-            },
+        // The data for our dataset
+        data: {
+            labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
+            datasets: [{
+                label: "Recursos Hidricos",
+                backgroundColor: 'transparent',
+                borderColor: '#317abe',
+                data: [200, 240, 300, 100, 200, 100, 98],
+            }]
+        },
 
-            // Configuration options go here
-            options: {}
-        });
+        // Configuration options go here
+        options: {}
+    });
 
-        // grafico para recursos energeticos
-        ctx = document.getElementById('canvas2').getContext('2d');
-        chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'line',
+    // grafico para recursos energeticos
+    ctx = document.getElementById('canvas2').getContext('2d');
+    chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
 
-            // The data for our dataset
-            data: {
-                labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
-                datasets: [{
-                    label: "Recursos Energéticos",
-                    backgroundColor: 'transparent',
-                    borderColor: '#bd2130',
-                    data: [200, 240, 300, 100, 200, 100, 98],
-                }]
-            },
+        // The data for our dataset
+        data: {
+            labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
+            datasets: [{
+                label: "Recursos Energéticos",
+                backgroundColor: 'transparent',
+                borderColor: '#bd2130',
+                data: [200, 240, 300, 100, 200, 100, 98],
+            }]
+        },
 
 
-        });
+    });
 
 
 
