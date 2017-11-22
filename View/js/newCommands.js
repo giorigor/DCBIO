@@ -55,7 +55,7 @@
                     zoom: 20,
                     mapTypeId: "satellite"
                 });
-                map.setTilt(0);
+                map.setTilt(45);
 
                 // Cria os marcadores dos prédios daquele campus
                 db.collection('campi').doc(docCampus.id).collection('predios').get().then(
