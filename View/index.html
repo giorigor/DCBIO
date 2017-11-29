@@ -160,10 +160,12 @@
                 <button id="buttonSaibaMais" type="button" class="btn btn-primary btn-saiba-mais" style="
                         width: 100%;
                     ">Saiba mais</button>
-                <button data-toggle="modal" data-target="#ModalReportarProblema" type="button" class="btn btn-primary btn-reportar" style="
+                <button id="buttonReportarMapa" type="button" class="btn btn-primary btn-reportar" style="
                         margin: 12px 0 19px 0px;
                         width: 100%;"
-                        >Reportar problema</button>
+                        onclick="invocaModalReportarProblema('qtds0mTkE16JhcEQxAch')"
+                        >Reportar Problema</button>
+                        
                 <label for="insiraCampusAqui" style="
                 color: #333333b8;
                 font-size: 13px;
@@ -326,7 +328,7 @@
                                     </div>
                                 </form>
 
-                                <button type="button" class="btn btn-primary btn-reportar" onclick="registrarProblema()">REPORTAR PROBLEMA</button>
+                                <button type="button" class="btn btn-primary btn-reportar" onclick="registrarProblema()">Reportar Problema</button>
 
                             </div>
 
