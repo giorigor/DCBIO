@@ -253,21 +253,21 @@
                                 <form>
                                     <div class="form-group">
                                         <label for="reclamacaoSelectCampus">Campus</label>
-                                        <select class="form-control" id="reclamacaoSelectCampus">
-                                            <option>Coração Eucarístico</option>
-                                            <option>Praça da Liberdade</option>
+                                        <select class="form-control" id="reclamacaoSelectCampus" onchange="trocaCampi(value)">
+                                            <!-- <option>Coração Eucarístico</option>
+                                            <option>Praça da Liberdade</option> -->
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="reclamacaoSelectPredio">Prédio</label>
                                         <select class="form-control" id="reclamacaoSelectPredio">
-                                            <option>Biblioteca</option>
+                                            <!-- <option>Biblioteca</option>
                                             <option>Museu</option>
                                             <option>Prédio 1</option>
                                             <option>Prédio 2</option>
                                             <option>Prédio 3</option>
                                             <option>Prédio 4</option>
-                                            <option>Prédio 5</option>
+                                            <option>Prédio 5</option> -->
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -275,8 +275,8 @@
                                         <input type="email" class="form-control" id="FormControlInputTitulo" placeholder="">
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Descrição</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                        <label for="FormControlTextareaDesc">Descrição</label>
+                                        <textarea class="form-control" id="FormControlTextareaDesc" rows="3"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="FormControlInputNome">Nome</label>
@@ -288,7 +288,7 @@
                                     </div>
                                 </form>
 
-                                <button type="button" class="btn btn-primary btn-reportar">REPORTAR PROBLEMA</button>
+                                <button type="button" class="btn btn-primary btn-reportar" onclick="registrarProblema()">REPORTAR PROBLEMA</button>
 
                             </div>
 

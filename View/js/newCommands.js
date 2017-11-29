@@ -12,13 +12,11 @@
 
     db.collection('campi').orderBy('nome').get().then(
       snap => {
-          console.log(snap);
 
           let listaBotoesCampus = document.getElementById('insiraCampusAqui');
 
           snap.forEach(
               docCampi => {
-                  console.log(docCampi);
                   let inputOpcao = document.createElement('option');
                   inputOpcao.appendChild(document.createTextNode(docCampi.data().nome));
                   inputOpcao.setAttribute('value',docCampi.id);
@@ -52,7 +50,7 @@
                 map = new google.maps.Map(document.getElementById('map'), {
                     center: docCampus.data().coord,
                     // zoom: docCampus.data().zoom+2,
-                    zoom: 20,
+                    zoom: 18,
                     mapTypeId: "satellite"
                 });
                 map.setTilt(45);
@@ -100,8 +98,6 @@
             '</div>'+
             '<h3 id="firstHeading" >' + docPredio.data().nome + '</h3>'+
             '<div id="bodyContent">'+
-            '<p class="text-warning">Último consumo energético: ' + 10 + ' KWH</p>'+
-            '<p class="text-primary">Último consumo hídrico: ' + 20 + ' KL</p>'+
             '<button type="button" id="button" class="btn btn-light" onClick="invocaModalSobrePredio(\'' +
             docCampus.id +
             '\',\'' +
@@ -121,6 +117,7 @@
 
                 var titulo = document.getElementById('tituloSobrePredio');
                 titulo.innerText = docPredio.data().nome;
+                titulo.setAttribute("value", idPredio);
 
                 // reclamacoes.appendChild(document.createTextNode(doc.data().nome));
                 let listaReclama = document.getElementById('reclamacoesSobrePredio');
@@ -153,57 +150,75 @@
                     }
                 );
 
+                // POPULA O GRAFICO DE CONTAS HIDRICAS
+                db.collection('campi').doc(idCampus).collection('predios').doc(idPredio).collection('contas').orderBy('mesRef').limit(12).get().then(
+                    colContas => {
+                        var vetorContaHid = [];
+                        var vetorContaElec = [];
+                        colContas.forEach(
+                            docConta => {
+                                switch (docConta.data().tipo){
+                                    case "Elétrica":
+                                        vetorContaElec.push(docConta.data().consumo);
+                                    break;
+                                    case "Hídrica":
+                                        vetorContaHid.push(docConta.data().consumo);
+                                    break;
+
+                                }
+                            }
+                        );
+
+
+                        // Grafico para recursos hidricos
+                        ctx = document.getElementById('canvas').getContext('2d');
+                        chart = new Chart(ctx, {
+                            // The type of chart we want to create
+                            type: 'line',
+
+                            // The data for our dataset
+                            data: {
+                                datasets: [{
+                                    label: "Recursos Hídricos",
+                                    backgroundColor: 'transparent',
+                                    borderColor: '#007fff',
+                                    data: vetorContaHid
+                                }]
+                            }
+                        });
+
+
+                        // Grafico para recursos energeticos
+                        ctx = document.getElementById('canvas2').getContext('2d');
+                        chart = new Chart(ctx, {
+                            // The type of chart we want to create
+                            type: 'line',
+
+                            // The data for our dataset
+                            data: {
+                                datasets: [{
+                                    label: "Recursos Energéticos",
+                                    backgroundColor: 'transparent',
+                                    borderColor: '#ff7f00',
+                                    data: vetorContaElec
+                                }]
+                            }
+                        });
+                        
+                    }
+                );
+
                 // btnReportaProblema = document.getElementById('buttonReportar');
                 // btnReportaProblema.removeEventListener('click', invocaModalReportarProblema(idCampus, idPredio) );
                 // btnReportaProblema.addEventListener('click', invocaModalReportarProblema(idCampus, idPredio))
 
                 // Edita o botão de reportar, passando o predio atual como parâmetro
                 let botaoReportar = document.getElementById('buttonReportar');
-                botaoReportar.setAttribute('onClick','invocaModalReportarProblema(\'' +
-                        idCampus + '\',\'' + idPredio
-                    + '\')');
+                botaoReportar.setAttribute('onClick','invocaModalReportarProblema(\'' + idCampus + '\')');
 
+                // \'' + idCampus + '\',\'' + idPredio + '\'
 
-                // Grafico para recursos hidricos
-                var ctx = document.getElementById('canvas').getContext('2d');
-                var chart = new Chart(ctx, {
-                    // The type of chart we want to create
-                    type: 'line',
-
-                    // The data for our dataset
-                    data: {
-                        labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
-                        datasets: [{
-                            label: "Recursos Hidricos",
-                            backgroundColor: 'transparent',
-                            borderColor: '#317abe',
-                            data: [200, 240, 300, 100, 200, 100, 98],
-                        }]
-                    },
-
-                    // Configuration options go here
-                    options: {}
-                });
-
-                // Grafico para recursos energeticos
-                ctx = document.getElementById('canvas2').getContext('2d');
-                chart = new Chart(ctx, {
-                    // The type of chart we want to create
-                    type: 'line',
-
-                    // The data for our dataset
-                    data: {
-                        labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
-                        datasets: [{
-                            label: "Recursos Energéticos",
-                            backgroundColor: 'transparent',
-                            borderColor: '#bd2130',
-                            data: [200, 240, 300, 100, 200, 100, 98],
-                        }]
-                    }
-
-
-                });
+                
 
                 // Após tudo estar pronto, faz o modal aparecer
                // $('#modalSobrePredio').modal('show');
@@ -214,40 +229,109 @@
 
     }
 
-    function invocaModalReportarProblema(idCampus, idPredio) {
+    function invocaModalReportarProblema(idCampus) {
+
         $('#ModalReportarProblema').modal('show');
 
-        db.collection('campi').get().orderBy('nome').then(
-            snap => {
-                // Pega o Select e remove os filhos dele
-                let reclamacaoSelectCampi = document.getElementById('reclamacaoSelectCampi');
-                while (reclamacaoSelectCampi.firstChild) {
-                    reclamacaoSelectCampi.removeChild(reclamacaoSelectCampi.firstChild);
-                }
+        // Pega o Select e remove os filhos dele
+        let reclamacaoSelectCampus = document.getElementById('reclamacaoSelectCampus');
 
-                snap.forEach(
-                    doc => {
-                        // Adiciona as opções do Select
-                        let optionSelect = document.createElement('option');
-                        optionSelect.appendChild(document.createTextNode(
-                            doc.data().nome
-                        ));
-                        optionSelect.setAttribute('value',doc.id);
-                        reclamacaoSelectCampi.appendChild(optionSelect);
+        while (reclamacaoSelectCampus.firstChild) {
+            reclamacaoSelectCampus.removeChild(reclamacaoSelectCampus.firstChild);
+        }
+
+        var optionVazia = document.createElement('option');
+        optionVazia.appendChild(document.createTextNode(" "));
+        optionVazia.selected = true;
+        optionVazia.hidden = true;
+        optionVazia.disabled = true;
+        reclamacaoSelectCampus.appendChild(optionVazia);
+
+        db.collection('campi').get().then(
+            colCampi => {
+                colCampi.forEach(
+                    docCampus => {
+                
+                    // CRIA AS OPÇÕES PRO SELECT DE CAMPUS
+    
+                        var inputOpcaoCampus = document.createElement('option');
+                        inputOpcaoCampus.appendChild(document.createTextNode(docCampus.data().nome));
+                        inputOpcaoCampus.setAttribute('value',docCampus.id);
+                        reclamacaoSelectCampus.appendChild(inputOpcaoCampus);
+    
                     }
-                )
+                );
             }
         );
 
-        if (idCampus!=null && idPredio!=null){
+        // reclamacaoSelectPredio.selectIndex = 1;
 
-        } else{
-
-        }
-
+        trocaCampi(idCampus);
 
 
         // Após tudo emstar pronto, faz o modal 'Sobre' esconder e o 'Reportar' aparecer
         // $('#modalSobrePredio').modal('hide');
         // $('#ModalReportarProblema').modal('show');
+    }
+
+    function trocaCampi(idCampus){        
+        
+        let reclamacaoSelectPredio = document.getElementById('reclamacaoSelectPredio');
+        while (reclamacaoSelectPredio.firstChild) {
+            reclamacaoSelectPredio.removeChild(reclamacaoSelectPredio.firstChild);
+        }
+        var optionVazia = document.createElement('option');
+        optionVazia.appendChild(document.createTextNode(" "));
+        optionVazia.selected = true;
+        optionVazia.hidden = true;
+        optionVazia.disabled = true;
+        reclamacaoSelectPredio.appendChild(optionVazia);
+    
+        db.collection('campi').doc(idCampus).collection('predios').orderBy('nome').get().then(
+            colPredios => {
+                colPredios.forEach(
+                    docPredio => {
+    
+                    // CRIA AS OPÇÕES PRO SELECT DE PREDIO
+    
+                        var inputOpcaoPredio = document.createElement('option');
+                        inputOpcaoPredio.appendChild(document.createTextNode(docPredio.data().nome));
+                        inputOpcaoPredio.setAttribute('value',docPredio.id);
+                        reclamacaoSelectPredio.appendChild(inputOpcaoPredio);
+    
+                    }
+                )
+            }
+        );    
+    };
+
+    function registrarProblema(){
+        let idCampus = document.getElementById('reclamacaoSelectCampus').value;
+        let idPredio = document.getElementById('reclamacaoSelectPredio').value;
+        let titulo = document.getElementById('FormControlInputTitulo').value;
+        let descricao = document.getElementById('FormControlTextareaDesc').value;
+        let nome = document.getElementById('FormControlInputNome').value;
+        let email = document.getElementById('FormControlInputEmail').value;
+
+        if (idCampus && idPredio && titulo && descricao && nome && email){
+            db.collection('campi').doc(idCampus).collection('predios').doc(idPredio).collection('reclamacoes').add(
+                {
+                    titulo: titulo,
+                    desc: descricao,
+                    nome: nome,
+                    email: email
+                }
+            ).then(
+                docCampi => {
+                    alert('Reclamação registrada com sucesso!');
+                    window.location.reload(false);
+                }
+            ).catch(
+                error => {
+                    alert(error);
+                }
+            );
+        } else {
+            alert("Por favor, preencha todos os campos corretamente!");
+        }
     }
