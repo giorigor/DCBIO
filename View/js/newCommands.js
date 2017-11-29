@@ -153,9 +153,9 @@
                     }
                 );
 
-                // btnReportaProblema = document.getElementById('buttonReportar');
+                 // btnReportaProblema = document.getElementById('buttonReportar');
                 // btnReportaProblema.removeEventListener('click', invocaModalReportarProblema(idCampus, idPredio) );
-                // btnReportaProblema.addEventListener('click', invocaModalReportarProblema(idCampus, idPredio))
+                //  btnReportaProblema.addEventListener('click', invocaModalReportarProblema(idCampus, idPredio));
 
                 // Edita o botão de reportar, passando o predio atual como parâmetro
                 let botaoReportar = document.getElementById('buttonReportar');
@@ -172,12 +172,13 @@
 
                     // The data for our dataset
                     data: {
-                        labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
+                        labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
+                        "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
                         datasets: [{
                             label: "Recursos Hidricos",
                             backgroundColor: 'transparent',
                             borderColor: '#317abe',
-                            data: [200, 240, 300, 100, 200, 100, 98],
+                            data: [0, 0, 0, 0, 0, 0, 0],
                         }]
                     },
 
@@ -193,12 +194,13 @@
 
                     // The data for our dataset
                     data: {
-                        labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
+                        labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
+                            "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
                         datasets: [{
                             label: "Recursos Energéticos",
                             backgroundColor: 'transparent',
                             borderColor: '#bd2130',
-                            data: [200, 240, 300, 100, 200, 100, 98],
+                            data: [0, 0, 0, 0, 0, 0, 0],
                         }]
                     }
 
