@@ -150,6 +150,7 @@
                     }
                 );
 
+<<<<<<< HEAD
                 // POPULA O GRAFICO DE CONTAS HIDRICAS
                 db.collection('campi').doc(idCampus).collection('predios').doc(idPredio).collection('contas').orderBy('mesRef').limit(12).get().then(
                     colContas => {
@@ -209,14 +210,64 @@
                 );
 
                 // btnReportaProblema = document.getElementById('buttonReportar');
+=======
+                 // btnReportaProblema = document.getElementById('buttonReportar');
+>>>>>>> c0d7b9999d4c93f058a3dc6912d922fe3f05bab1
                 // btnReportaProblema.removeEventListener('click', invocaModalReportarProblema(idCampus, idPredio) );
-                // btnReportaProblema.addEventListener('click', invocaModalReportarProblema(idCampus, idPredio))
+                //  btnReportaProblema.addEventListener('click', invocaModalReportarProblema(idCampus, idPredio));
 
                 // Edita o botão de reportar, passando o predio atual como parâmetro
                 let botaoReportar = document.getElementById('buttonReportar');
+<<<<<<< HEAD
                 botaoReportar.setAttribute('onClick','invocaModalReportarProblema(\'' + idCampus + '\')');
 
                 // \'' + idCampus + '\',\'' + idPredio + '\'
+=======
+                botaoReportar.setAttribute('onClick','invocaModalReportarProblema(\'' +
+                        idCampus + '\',\'' + idPredio
+                    + '\')');
+
+
+                // Grafico para recursos hidricos
+                var ctx = document.getElementById('canvas').getContext('2d');
+                var chart = new Chart(ctx, {
+                    // The type of chart we want to create
+                    type: 'line',
+
+                    // The data for our dataset
+                    data: {
+                        labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
+                        "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+                        datasets: [{
+                            label: "Recursos Hidricos",
+                            backgroundColor: 'transparent',
+                            borderColor: '#317abe',
+                            data: [0, 0, 0, 0, 0, 0, 0],
+                        }]
+                    },
+
+                    // Configuration options go here
+                    options: {}
+                });
+
+                // Grafico para recursos energeticos
+                ctx = document.getElementById('canvas2').getContext('2d');
+                chart = new Chart(ctx, {
+                    // The type of chart we want to create
+                    type: 'line',
+
+                    // The data for our dataset
+                    data: {
+                        labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
+                            "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+                        datasets: [{
+                            label: "Recursos Energéticos",
+                            backgroundColor: 'transparent',
+                            borderColor: '#bd2130',
+                            data: [0, 0, 0, 0, 0, 0, 0],
+                        }]
+                    }
+>>>>>>> c0d7b9999d4c93f058a3dc6912d922fe3f05bab1
 
                 
 

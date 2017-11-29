@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase-firestore.js"></script>
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 
 
     <!-- Bootstrap CSS -->
@@ -124,6 +125,11 @@
             position: absolute;
         }
 
+        .btn-primary {
+            text-transform: uppercase;
+            font-size: 12.5px;
+        }
+
 
     </style>
 
@@ -135,12 +141,14 @@
     <div class="container-fluid" style="height:100%">
         <div class="row" style="height:100%">
 
-            <div class="col-lg-2" style="background-color: #fff;">
+            <div class="col-lg-2" style="background-color: #fff; height: 100%;">
 
                 <img src="images/logo-dcbio.png" style="
-                    width: 130px;
                     height: 130px;
-                    margin: 21px 0 51px 31px;
+                    margin: 21px 0 51px 0;
+                    margin-left: auto;
+                    margin-right: auto;
+                    display: inherit;
                 ">
                 <p style="
                 margin: -38px 0 0 0;
@@ -149,6 +157,13 @@
             ">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
                 <br>
+                <button id="buttonSaibaMais" type="button" class="btn btn-primary btn-saiba-mais" style="
+                        width: 100%;
+                    ">Saiba mais</button>
+                <button data-toggle="modal" data-target="#ModalReportarProblema" type="button" class="btn btn-primary btn-reportar" style="
+                        margin: 12px 0 19px 0px;
+                        width: 100%;"
+                        >Reportar problema</button>
                 <label for="insiraCampusAqui" style="
                 color: #333333b8;
                 font-size: 13px;
@@ -185,6 +200,29 @@
                     <!--<div id="insiraCampusAqui" class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
                     <!--</div>-->
                 <!--</div>-->
+                <div class = "sociais" style="
+                            margin: 16px 0 0 0;
+                        ">
+                    <a href="https://www.facebook.com/dcbiosustentavel.pucminas/" target=_blank><img src="images/facebook.png" style="
+                    width: 40px;
+                "></a>
+                    <a href="https://www.instagram.com/dcbio_sustentavel/" target=_blank><img src="images/instagram.png" style="
+                width: 40px;
+            "></a>
+                </div>
+                <div class="footer" style="
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    padding-left: 16px;
+                ">
+                    <p style="
+                    margin-top: 12px;
+                    font-size: 10px;
+                    margin-bottom: 0px;
+                ">&copy; 2017 Engenharia de Software - PUC Minas<p>
+                </div>
             </div>
 
             <div id="map" class="col-lg-10" style="background-color:antiquewhite; height: 100%;">
