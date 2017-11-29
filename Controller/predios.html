@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bootstrap Dashboard by Bootstrapious.com</title>
+    <title>DCBIO - Gerenciar Prédios</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -66,11 +66,11 @@
         <nav class="side-navbar">
           <!-- Sidebar Navidation Menus--><span class="heading">Ferramentas</span>
           <ul class="list-unstyled">
-            <li> <a href="./index.html"><i class="icon-website"></i>Início</a></li>
+            <li> <a href="./index.html"><i class="icon-website"></i>Início </a></li>
             <li> <a href="./campi.html"> <i class="icon-home"></i>Campi </a></li>
             <li class="active"> <a href="./predios.html"> <i class="icon-form"></i>Prédios </a></li>
-            <!--<li> <a href="./contas.html"> <i class="icon-bill"></i>Contas </a></li>-->
-            <!--<li> <a href="./noticias.html"> <i class="icon-paper-airplane"></i>Notícias </a></li>-->
+            <li> <a href="./contas.html"> <i class="icon-bill"></i>Contas </a></li>
+            <li> <a href="./reclamacoes.html"> <i class="icon-paper-airplane"></i>Reclamações </a></li>
             <!--<li> <a href="login.html"> <i class="icon-interface-windows"></i>Login Page</a></li>-->
           </ul>
         </nav>
@@ -87,17 +87,30 @@
 
             <div class="card">
               <div class="card-header d-flex align-items-center">
+                <h3 class="h4">Selecionar Campus</h3>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="inputCheckbox">Campus</label><br>
+                  <select id="inputCheckbox" class="custom-select form-control" onchange="trocaCampi(value)">
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header d-flex align-items-center">
                 <h3 class="h4">Adicionar Prédio</h3>
               </div>
               <div class="card-body">
                 <form>
                     <div class="form-group">
                       <label for="inputNome">Nome</label>
-                      <input id="inputNome" type="text" placeholder="ex: Caeté" class="form-control">
+                      <input id="inputNome" type="text" placeholder="ex: Prédio 1" class="form-control">
                     </div>
                     <div class="form-group">
                       <label for="inputRotulo" >Rótulo</label>
-                      <input id="inputRotulo" type="text" placeholder="ex: C" class="form-control">
+                      <input id="inputRotulo" type="text" placeholder="ex: 1" class="form-control">
                     </div>
                     <div class="form-group">
                       <label for="inputLatitude">Latitude</label>
@@ -108,52 +121,39 @@
                     <input id="inputLongitude" placeholder="ex: 98,7654" class="form-control form-control">
                   </div>
                   <div class="form-group">
-                    <label for="inputCheckbox">Campus</label><br>
-                    <select id="inputCheckbox" class="custom-select form-control">
-                    </select>
-                  </div>
-                  <div class="form-group">
                     <input type="button" id="inputSubmit" value="Salvar"  class="btn btn-primary">
                   </div>
                 </form>
               </div>
             </div>
-          </div>
-          <section class="tables">   
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="card">
-                    <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Lista de Prédios Cadastrados</h3>
-                    </div>
-                    <div class="card-body">
-                      <table class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th>Id</th>
-                            <th>Campus</th>
-                            <th>Nome</th>
-                            <th>Coordenadas</th>
-                            <th>Data Criação</th>
-                            <th>Ações</th>
-                          </tr>
-                        </thead>
-                        <tbody id="bodyTable" onload="load()">
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+            <div class="card">
+              <div class="card-header d-flex align-items-center">
+                <h3 class="h4">Lista de Prédios Cadastrados</h3>
+              </div>
+              <div class="card-body">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <!-- <th>Id</th> -->
+                      <th>Campus</th>
+                      <th>Nome</th>
+                      <th>Coordenadas</th>
+                      <th>Data Criação</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bodyTable" onload="load()">
+                  </tbody>
+                </table>
               </div>
             </div>
-          </section>
+          </div>
           <!-- Page Footer-->
           <footer class="main-footer">
             <div class="container-fluid">
               <div class="row">
                 <div class="col-sm-6">
-                  <p>Your company &copy; 2017-2019</p>
+                  <p>Engenharia de Software PUC Minas &copy; 2017</p>
                 </div>
                 <div class="col-sm-6 text-right">
                   <p>Design by <a href="https://bootstrapious.com/admin-templates" class="external">Bootstrapious</a></p>

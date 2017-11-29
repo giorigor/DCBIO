@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Bootstrap Dashboard by Bootstrapious.com</title>
+    <title>DCBIO - Gerenciar Contas</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -66,86 +66,103 @@
         <nav class="side-navbar">
           <!-- Sidebar Navidation Menus--><span class="heading">Ferramentas</span>
           <ul class="list-unstyled">
-            <li class="active"> <a href="./index.html"><i class="icon-website"></i>Início</a></li>
+            <li> <a href="./index.html"><i class="icon-website"></i>Início </a></li>
             <li> <a href="./campi.html"> <i class="icon-home"></i>Campi </a></li>
             <li> <a href="./predios.html"> <i class="icon-form"></i>Prédios </a></li>
-            <li> <a href="./contas.html"> <i class="icon-bill"></i>Contas </a></li>
-            <li> <a href="./noticias.html"> <i class="icon-paper-airplane"></i>Notícias </a></li>
-            <li> <a href="login.html"> <i class="icon-interface-windows"></i>Login Page</a></li>
+            <li class="active"> <a href="./contas.html"> <i class="icon-bill"></i>Contas </a></li>
+            <li> <a href="./reclamacoes.html"> <i class="icon-paper-airplane"></i>Reclamações </a></li>
+            <!--<li> <a href="login.html"> <i class="icon-interface-windows"></i>Login Page</a></li>-->
           </ul>
         </nav>
         <div class="content-inner">
         <!-- Page Header-->
           <header class="page-header">
             <div class="container-fluid">
-              <h2 class="no-margin-bottom">Editar Campus</h2>
+              <h2 class="no-margin-bottom">Editar Contas</h2>
             </div>
           </header>
           <!-- Inline Form-->
           <div class="col-lg-12">
+            <br>
+
             <div class="card">
               <div class="card-header d-flex align-items-center">
-                <h3 class="h4">Adicionar Campus</h3>
+                <h3 class="h4">Selecionar Prédio</h3>
               </div>
               <div class="card-body">
-                <form class="form-inline">
-                  <div class="form-group">
-                    <label for="inputNome" class="sr-only">Nome</label>
-                    <input id="inputNome" type="text" placeholder="Nome" class="mx-sm-3 form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="inputLatitude" class="sr-only">Latitude</label>
-                    <input id="inputLatitude" type="text" placeholder="Latitude" class="mx-sm-2 form-control form-control">
-                  </div><div class="form-group">
-                  <label for="inputLongitude" class="sr-only">Longitude</label>
-                  <input id="inputLongitude" type="text" placeholder="Longitude" class="mx-sm-2 form-control form-control">
+                <div class="form-group">
+                  <label for="inputCampus">Campus</label><br>
+                  <select id="inputCampus" class="custom-select form-control" onchange="trocaCampi(value)">
+                  </select>
                 </div>
+                <div class="form-group">
+                  <label for="inputPredio">Prédio</label><br>
+                  <select id="inputPredio" class="custom-select form-control" onchange="trocaPredio(value)">
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header d-flex align-items-center">
+                <h3 class="h4">Adicionar Contas</h3>
+              </div>
+              <div class="card-body">
+                <form>
+                    <div class="form-group">
+                      <label for="inputCodigo">Código</label>
+                      <input id="inputCodigo" type="text" placeholder="ex: 9876543" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="inputMes">Mês</label>
+                      <input id="inputMes" type="month" placeholder="ex: agosto de 2015" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="inputConsumo">Consumo</label>
+                      <input id="inputConsumo" placeholder="ex: 3000" class="form-control form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="inputTipo">Tipo da Conta</label>
+                      <select id="inputTipo" class="custom-select form-control">
+                          <option value='Elétrica'>Elétrica</option>
+                          <option value='Hídrica'>Hídrica</option>
+                      </select>
+                    </div>
                   <div class="form-group">
-                    <button id="inputSubmit" onclick="salvar()" value="Enviar" class="mx-sm-2 btn btn-primary"></button>
+                    <input type="button" id="inputSubmit" value="Salvar"  class="btn btn-primary">
                   </div>
                 </form>
               </div>
             </div>
-          </div>
-          <section class="tables">   
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="card">
-                    <div class="card-close">
-                      <div class="dropdown">
-                        <button type="button" id="closeCard" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
-                      </div>
-                    </div>
-                    <div class="card-header d-flex align-items-center">
-                      <h3 class="h4">Lista de Campi Cadastrados</h3>
-                    </div>
-                    <div class="card-body">
-                      <table class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th>Id</th>
-                            <th>Nome</th>
-                            <th>Coordenadas</th>
-                            <th>Data Criação</th>
-                            <th>Ações</th>
-                          </tr>
-                        </thead>
-                        <tbody id="bodyTable" onload="load()">
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="card">
+            <div class="card-header d-flex align-items-center">
+              <h3 class="h4">Lista de Contas Cadastradas</h3>
             </div>
-          </section>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Consumo</th>
+                    <th>Mês Referência</th>
+                    <th>Data Criação</th>
+                    <th>Tipo</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="bodyTable" onload="load()">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
           <!-- Page Footer-->
           <footer class="main-footer">
             <div class="container-fluid">
               <div class="row">
                 <div class="col-sm-6">
-                  <p>Your company &copy; 2017-2019</p>
+                  <p>Engenharia de Software PUC Minas &copy; 2017</p>
                 </div>
                 <div class="col-sm-6 text-right">
                   <p>Design by <a href="https://bootstrapious.com/admin-templates" class="external">Bootstrapious</a></p>
@@ -175,7 +192,7 @@
       ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>
 
-    <script src="js/campiEditor.js"></script>
+    <script src="js/contasEditor.js"></script>
 
 
   </body>
